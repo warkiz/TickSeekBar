@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/title_text_style"
+            android:text="Custom by selector" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="1. tick_marks_color=@color/selector_tick_marks_color" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="62"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_tick_marks_color="@color/selector_tick_marks_color"
+            app:tsb_ticks_count="6" />
+
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="2. tick_marks_drawable=@drawable/selector_tick_marks_drawable" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:tag="aaaa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="45"
+            app:tsb_tick_marks_drawable="@drawable/selector_tick_marks_drawable"
+            app:tsb_tick_marks_size="18dp"
+            app:tsb_ticks_count="6" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="3. tick_texts_color=@color/selector_tick_texts_2_color" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="45"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_color="@color/selector_tick_texts_2_color"
+            app:tsb_ticks_count="6" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="4. tick_texts_color=@color/selector_tick_texts_3_color" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="76"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_color="@color/selector_tick_texts_3_color"
+            app:tsb_ticks_count="6" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="5. thumb_color=@color/selector_thumb_color" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="20"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_thumb_color="@color/selector_thumb_color"
+            app:tsb_ticks_count="6" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="6. thumb_drawable=@drawable/selector_thumb_drawable" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="20"
+            app:tsb_thumb_size="18dp"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_thumb_drawable="@drawable/selector_thumb_drawable"
+            app:tsb_ticks_count="6" />
+
+        <include layout="@layout/source_code_link" />
+
+    </LinearLayout>
+
+</ScrollView>

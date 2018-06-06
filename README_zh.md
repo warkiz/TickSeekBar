@@ -3,26 +3,27 @@
 [![DOWNLOAD](https://api.bintray.com/packages/warkiz/maven/tickseekbar/images/download.svg)](https://bintray.com/warkiz/maven/tickseekbar/_latestVersion)
 [![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
 
-This is a customizable SeekBar library on Android. Also, If you need Indicator to show top of seek bar, please see [anther library](https://github.com/warkiz/IndicatorSeekBar) [  中文.md ](https://github.com/warkiz/TickSeekBar/blob/master/README_zh.md)
+这是一个安卓自定义SeekBar库。 另外, 如果你需要指示器显示在SeekBar的顶部, 请看另外一个[SeekBar库](https://github.com/warkiz/TickSeekBar)。  [  English.md ](https://github.com/warkiz/TickSeekBar/blob/master/README.md)
 
+## 预览
 
-## OverView
 <img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/overview.png?raw=true" width = "392" height = "115"/>
 
-## Screenshot
+
+## 截图
 
 <img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/continuous.gif?raw=true" width = "264" height = "464"/><img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/discrete.gif?raw=true" width = "264" height = "464"/><img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/custom.gif?raw=true" width = "264" height = "464"/>
 
-## Demo
-[download](https://github.com/warkiz/TickSeekBar/blob/master/apk/demo.apk)
+## 演示
+[下载](https://github.com/warkiz/TickSeekBar/blob/master/apk/demo.apk)
 
-## Setup
+## 初始化
 
 ```gradle
 implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.1'
 ```
 
-## Usage
+## 使用
 #### xml
 
 ```xml
@@ -70,8 +71,8 @@ TickSeekBar seekBar = TickSeekBar
              .build();
 ```
 
-## Custom section tracks color
-The color of every block of seek bar can also be custom.
+## 自定义每一节的track块颜色
+seekbar上每一块track的颜色都能被设置：
 
 ```Java
 sectionSeekBar.customSectionTrackColor(new ColorCollector() {
@@ -87,12 +88,11 @@ sectionSeekBar.customSectionTrackColor(new ColorCollector() {
 });
 ```
 
-## Selector drawable&color were supported
+## 支持Selector类型的图片或颜色
 
-You can set the StateListDrawable or ColorStateList for the thumb, tickMarks;
-Also, ColorStateList for tickTexts is supported, too. Usage's format acccording to:
+你可以为滑块和tick标记设置StateListDrawable 或者 ColorStateList, 而且，tick下面的文字也支持ColorStateList,使用的格式如下:
 
-Thumb selector drawable:
+滑块图片 selector:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -104,7 +104,7 @@ Thumb selector drawable:
 </selector>
 ```
 
-Thumb selector color:
+滑块颜色 selectorr:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -116,7 +116,7 @@ Thumb selector color:
 </selector>
 ```
 
-TickMarks selector drawable：
+tick标记图片 selector：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -128,7 +128,7 @@ TickMarks selector drawable：
 </selector>
 ```
 
-TickMarks selector color：
+tick标记颜色 selector：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -140,7 +140,7 @@ TickMarks selector color：
 </selector>
 ```
 
-TickTexts selector color：
+tick文字颜色 selector：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -154,7 +154,7 @@ TickTexts selector color：
 </selector>
 ```
 
-## Listener
+## 监听器
 ```Java
 seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
         @Override
@@ -179,11 +179,11 @@ seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
 });
 ```
 
-## Attributes
+## 属性
 
 [ attr.xml ](https://github.com/warkiz/TickSeekBar/blob/master/tickseekbar/src/main/res/values/attr.xml)
 
-## Support & Contact me
+## 支持 & 联系我
 
 Star to support me , many thanks!
 
@@ -191,7 +191,7 @@ Feel free to contact me if you have any trouble on this project:
 1. Create an issue.
 2. Send mail to me, "warkiz".concat("4j").concat("@").concat("gmail.com")
 
-## License
+## 许可
 
 	Copyright (C) 2017 zhuangguangquan warkiz
 

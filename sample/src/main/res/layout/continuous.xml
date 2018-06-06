@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="1.default, progress = 50" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="50" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="2. show_indicator=rounded_rectangle" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="11. continuous listener" />
+
+        <TextView
+            android:id="@+id/states"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/progress"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/progress_float"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/from_user"
+            style="@style/des_text_style" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/listener"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="76"/>
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="3. show_thumb_text=above\r track_progress_color=@color/color_blue
+             \n thumb_color=@color/color_blue \n thumb_text_color=@color/color_pink" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="88"
+            app:tsb_show_thumb_text="above"
+            app:tsb_thumb_color="@color/color_blue"
+            app:tsb_thumb_text_color="@color/color_pink"
+            app:tsb_track_progress_color="@color/color_blue" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="4. show_thumb_text=below , \n track_background_color=@color/color_pink \n progress_value_float=true \n setDecimalScale" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/scale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="23.4323"
+            app:tsb_progress_value_float="true"
+            app:tsb_show_thumb_text="below"
+            app:tsb_track_background_color="@color/color_pink" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="5. ticks_count=2,show_tick_texts=above,
+             tick_texts_color=@color/color_gray
+             \n indicator_color=@color/color_blue" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="76"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_color="@color/color_gray"
+            app:tsb_ticks_count="2" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="6. show_tick_texts=below, show_indicator=circular_bubble" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="56"
+            app:tsb_show_tick_texts="below"
+            app:tsb_ticks_count="2" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="7. tick_texts_array=@array/last_next_length_2,\n show_thumb_text=below,\n tick_texts_color=@color/color_gray" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="34"
+            app:tsb_show_thumb_text="below"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_array="@array/last_next_length_2"
+            app:tsb_tick_texts_color="@color/color_gray"
+            app:tsb_ticks_count="2" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="8. tick_texts_array=@array/last_next_length_2" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="34"
+            app:tsb_show_tick_texts="below"
+            app:tsb_tick_texts_array="@array/last_next_length_2"
+            app:tsb_ticks_count="2" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="9. custom the size/color for track/thumb/indicator/indicatorText/tickText" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="25"
+            app:tsb_show_tick_texts="below"
+            app:tsb_thumb_color="@color/color_green"
+            app:tsb_thumb_size="20dp"
+            app:tsb_tick_texts_color="@color/color_blue"
+            app:tsb_tick_texts_size="15sp"
+            app:tsb_ticks_count="2"
+            app:tsb_track_background_color="@color/color_gray"
+            app:tsb_track_background_size="2dp"
+            app:tsb_track_progress_color="@color/color_blue"
+            app:tsb_track_progress_size="4dp" />
+
+        <include layout="@layout/source_code_link" />
+
+    </LinearLayout>
+</ScrollView>

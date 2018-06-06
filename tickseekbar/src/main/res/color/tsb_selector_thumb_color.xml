@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--this color is for thumb which in pressing status-->
+    <item android:color="#80555555" android:state_pressed="true" />
+    <!--this color is for thumb which in normal status-->
+    <item android:color="#ff00ff" />
+</selector>

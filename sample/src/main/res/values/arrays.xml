@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="tick_below_text_length_5">
+        <item>one</item>
+        <item>two</item>
+        <item>three</item>
+        <item>four</item>
+        <item>five</item>
+    </array>
+    <array name="last_next_length_5">
+        <item>last</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>next</item>
+    </array>
+    <array name="small_normal_middle_large_length_7">
+        <item>small</item>
+        <item></item>
+        <item>normal</item>
+        <item></item>
+        <item>middle</item>
+        <item></item>
+        <item>large</item>
+    </array>
+    <array name="irregular_length_6">
+        <item>small</item>
+        <item></item>
+        <item>normal</item>
+        <item></item>
+        <item>middle</item>
+        <item>large</item>
+    </array>
+
+    <array name="tick_below_text_length_6">
+        <item>Ab</item>
+        <item>Cd</item>
+        <item>Ef</item>
+        <item>Gh</item>
+        <item>Ij</item>
+        <item>Kl</item>
+    </array>
+    <array name="last_next_length_2">
+        <item>last</item>
+        <item>next</item>
+    </array>
+
+</resources>

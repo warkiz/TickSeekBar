@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/title_text_style"
+            android:text="Discrete" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="1. ticks_count=5,show_tick_marks_type=none" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="25"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="2. ticks_count=5, show_tick_marks_type=oval \n show_tick_texts= above" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/custom_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="above"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="3. show_tick_marks_type=divider" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="25"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_tick_marks_color="#ffffff"
+            app:tsb_ticks_count="5"
+            app:tsb_track_background_size="3dp"
+            app:tsb_track_progress_size="3dp" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="4. show_tick_marks_type=square" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/custom_section_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="25"
+            app:tsb_show_tick_marks_type="square"
+            app:tsb_ticks_count="5"
+            app:tsb_track_background_size="3dp"
+            app:tsb_track_progress_size="3dp" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="5. tick_marks_drawable=@mipmap/ic_launcher" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="25"
+            app:tsb_tick_marks_drawable="@mipmap/ic_launcher"
+            app:tsb_tick_marks_size="15dp"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="6. show_tick_texts=above" />
+
+        <TextView
+            android:id="@+id/states"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/progress"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/progress_float"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/from_user"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/thumb_position"
+            style="@style/des_text_style" />
+
+        <TextView
+            android:id="@+id/tick_text"
+            style="@style/des_text_style" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/listener"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_ticks_count="5"
+            app:tsb_thumb_color="@color/colorAccent"
+            app:tsb_thumb_size="16dp"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_tick_marks_color="@color/colorAccent"
+            app:tsb_tick_marks_size="8dp"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_color="@color/color_pink"
+            app:tsb_tick_texts_size="13sp"
+            app:tsb_track_background_color="@color/color_gray"
+            app:tsb_track_background_size="2dp"
+            app:tsb_track_progress_color="@color/color_blue"
+            app:tsb_track_progress_size="3dp" />
+
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="7. show_tick_texts=below, setTickMarksDrawable" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/tick_drawable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="below"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="8. show_tick_texts=below, tick_texts_array=@array/last_next_length_5 \n R2L = true" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="below"
+            app:tsb_r2l="true"
+            app:tsb_progress="45"
+            app:tsb_tick_texts_array="@array/last_next_length_5"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="9. show_tick_texts=above, tick_texts_array=@array/last_next_length_5 \n seek_smoothly=true" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="above"
+            app:tsb_seek_smoothly="true"
+            app:tsb_tick_texts_array="@array/last_next_length_5"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="10. show_tick_texts=below, tick_texts_array=@array/small_middle_large_length_7" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_show_tick_texts="below"
+            app:tsb_tick_texts_array="@array/small_normal_middle_large_length_7"
+            app:tsb_ticks_count="7" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="11. show_tick_texts=above, tick_texts_array=@array/irregular_length_6" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="divider"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_array="@array/irregular_length_6"
+            app:tsb_tick_texts_color="@color/color_blue"
+            app:tsb_ticks_count="7" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="12. show_tick_texts=below, tick_texts_array=@array/tick_below_text_length_5" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="below"
+            app:tsb_tick_texts_array="@array/tick_below_text_length_5"
+            app:tsb_ticks_count="5" />
+
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="13. show_tick_texts=above, tick_texts_array=@array/tick_below_text_length_5" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="above"
+            app:tsb_tick_texts_array="@array/tick_below_text_length_5"
+            app:tsb_ticks_count="5" />
+
+        <include layout="@layout/source_code_link" />
+
+    </LinearLayout>
+
+</ScrollView>

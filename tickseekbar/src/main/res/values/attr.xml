@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TickSeekBar">
+        //seekBar
+        <attr name="tsb_max" format="float" /><!-- the max value of seekBar to seek, default 100-->
+        <attr name="tsb_min" format="float" /><!-- the min value of seekBar to seek, default 0 -->
+        <attr name="tsb_progress" format="float" /><!-- the current progress value of seekBar, default 0-->
+        <attr name="tsb_progress_value_float" format="boolean" /><!--set the value of seekBar to float type, default false-->
+        <attr name="tsb_clear_default_padding" format="boolean" /><!-- set seekBar's leftPadding&rightPadding to zero, default false, default padding is 16dp-->
+        <attr name="tsb_ticks_count" format="integer" /><!--seekBar's ticks count, default zero-->
+        <attr name="tsb_seek_smoothly" format="boolean" /><!--true to seek smoothly when tick count >0, default false-->
+        <attr name="tsb_r2l" format="boolean" /><!--compat make app local change,like arabic local> 2, default false-->
+        <attr name="tsb_user_seekable" format="boolean" /><!--prevent user from seeking,only can be seek by setProgress(), default false-->
+        <attr name="tsb_only_thumb_draggable" format="boolean" /><!--user change the thumb's location by touching thumb/touching track,true for touching track to seek. false for touching thumb; default true-->
+        //indicator
+        //track
+        <attr name="tsb_track_background_size" format="dimension|reference" /><!-- set indicatorSeekBar's track background bar size, default 2dp-->
+        <attr name="tsb_track_background_color" format="color|reference" /><!-- set indicatorSeekBar's track background bar color, default #D7D7D7-->
+        <attr name="tsb_track_progress_size" format="dimension|reference" /><!-- set indicatorSeekBar's track progress bar size, default 2dp-->
+        <attr name="tsb_track_progress_color" format="color|reference" /><!-- set indicatorSeekBar's track progress bar color, default #FF4081-->
+        <attr name="tsb_track_rounded_corners" format="boolean" /><!-- indicator is visible when SeekBar visible, gone when SeekBar gone-->
+        //thumb
+        <attr name="tsb_thumb_color" format="color|reference" /><!--set thumb's color, default #FF4081-->
+        <attr name="tsb_thumb_size" format="dimension|reference" /><!--set thumb's size, default 14dp, thumb size will be limited in 30dp-->
+        <attr name="tsb_thumb_drawable" format="reference" /><!--set custom thumb's drawable you want,thumb size will be limited in 30dp, if drawable less than 30dp ,will show in raw size -->
+        //thumb text
+        <attr name="tsb_thumb_text_color" format="color|reference" /><!--set thumb's color, default #FF4081-->
+        <attr name="tsb_show_thumb_text"><!--select the tick shape type, default rectangle/1-->
+            <enum name="none" value="0" />
+            <enum name="below" value="1" />
+            <enum name="above" value="2" />
+        </attr>
+        //tickMarks
+        <attr name="tsb_tick_marks_color" format="color|reference" /><!--set tick's color, default #FF4081-->
+        <attr name="tsb_tick_marks_size" format="dimension|reference" /><!--set the tick width, default 10dp,custom drawable will be limited in 30dp, if less than 30dp ,will show in raw size-->
+        <attr name="tsb_tick_marks_drawable" format="reference" /><!--set custom tick's drawable you want, custom drawable will be limited in 30dp, if less than 30dp ,will show in raw size-->
+        <attr name="tsb_tick_marks_ends_hide" format="boolean" /><!--hide 2 ticks on the seekBar's both ends, default false-->
+        <attr name="tsb_tick_marks_swept_hide" format="boolean" /><!--hide the ticks on the seekBar's thumb left, default false-->
+        <attr name="tsb_show_tick_marks_type"><!--select the tick shape type, default rectangle/1-->
+            <enum name="none" value="0" />
+            <enum name="oval" value="1" />
+            <enum name="square" value="2" />
+            <enum name="divider" value="3" /> <!--show tickMarks shape as vertical line , line'size is 1 dp.-->
+            <enum name="custom" value="4" />
+        </attr>
+        //tickTexts
+        <attr name="tsb_show_tick_texts"><!--select the tick shape type, default rectangle/1-->
+            <enum name="none" value="0" />
+            <enum name="below" value="1" />
+            <enum name="above" value="2" />
+        </attr>
+        <attr name="tsb_tick_texts_color" format="reference|color" />
+        <attr name="tsb_tick_texts_size" format="dimension|reference" /><!--set the text size of tick below text, default 13sp-->
+        <attr name="tsb_tick_texts_array" format="reference" /><!--set the texts below tick to replace default progress text, default string of progress, work on seekBar type :DISCRETE_TICKS_TEXTS-->
+        <attr name="tsb_tick_texts_typeface"><!--select the text typeface, default normal-->
+            <enum name="normal" value="0" />
+            <enum name="monospace" value="1" />
+            <enum name="sans" value="2" />
+            <enum name="serif" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>
