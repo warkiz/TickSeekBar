@@ -1098,11 +1098,10 @@ public class TickSeekBar extends View {
             public void onAnimationUpdate(ValueAnimator animation) {
                 if (touchUpProgress - mProgressArr[closestIndex] > 0) {
                     mProgress = touchUpProgress - (Float) animation.getAnimatedValue();
-                    refreshThumbCenterXByProgress(mProgress);
                 } else {
                     mProgress = touchUpProgress + (Float) animation.getAnimatedValue();
-                    refreshThumbCenterXByProgress(mProgress);
                 }
+                refreshThumbCenterXByProgress(mProgress);
                 invalidate();
             }
         });
@@ -1409,14 +1408,14 @@ public class TickSeekBar extends View {
      *                 if over max ,will be max.
      */
     public synchronized void setProgress(float progress) {
+        lastProgress = mProgress;
         mProgress = MathUtils.constrain(progress, mMin, mMax);
         //adjust to the closest tick's progress
         if (mTicksCount > 2) {
             mProgress = mProgressArr[getClosestIndex()];
         }
-        lastProgress = mProgress;
         setSeekListener(false);
-        refreshSeekBarLocation();
+        refreshThumbCenterXByProgress(mProgress);
         postInvalidate();
     }
 
