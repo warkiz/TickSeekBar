@@ -20,7 +20,7 @@
 ## 初始化
 
 ```gradle
-implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.1'
+implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.2'
 ```
 
 ## 使用
