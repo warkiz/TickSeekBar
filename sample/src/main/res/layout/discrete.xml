@@ -107,15 +107,15 @@
             android:id="@+id/listener"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tsb_ticks_count="5"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="above"
             app:tsb_thumb_color="@color/colorAccent"
             app:tsb_thumb_size="16dp"
-            app:tsb_show_tick_marks_type="oval"
             app:tsb_tick_marks_color="@color/colorAccent"
             app:tsb_tick_marks_size="8dp"
-            app:tsb_show_tick_texts="above"
             app:tsb_tick_texts_color="@color/color_pink"
             app:tsb_tick_texts_size="13sp"
+            app:tsb_ticks_count="5"
             app:tsb_track_background_color="@color/color_gray"
             app:tsb_track_background_size="2dp"
             app:tsb_track_progress_color="@color/color_blue"
@@ -136,15 +136,16 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="8. show_tick_texts=below, tick_texts_array=@array/last_next_length_5 \n R2L = true" />
+            android:text="8. show_tick_texts=below, tick_texts_array=@array/last_next_length_5 \n r2l = true" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:tag="dsadsad"
+            app:tsb_progress="45"
+            app:tsb_r2l="true"
             app:tsb_show_tick_marks_type="oval"
             app:tsb_show_tick_texts="below"
-            app:tsb_r2l="true"
-            app:tsb_progress="45"
             app:tsb_tick_texts_array="@array/last_next_length_5"
             app:tsb_ticks_count="5" />
 
@@ -155,22 +156,23 @@
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tsb_seek_smoothly="true"
             app:tsb_show_tick_marks_type="oval"
             app:tsb_show_tick_texts="above"
-            app:tsb_seek_smoothly="true"
             app:tsb_tick_texts_array="@array/last_next_length_5"
             app:tsb_ticks_count="5" />
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="10. show_tick_texts=below, tick_texts_array=@array/small_middle_large_length_7" />
+            android:text="10. show_tick_texts=below, r2l=true" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tsb_progress="50"
+            app:tsb_r2l="true"
             app:tsb_show_tick_marks_type="divider"
             app:tsb_show_tick_texts="below"
-            app:tsb_tick_texts_array="@array/small_normal_middle_large_length_7"
             app:tsb_ticks_count="7" />
 
         <TextView

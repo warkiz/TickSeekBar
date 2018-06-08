@@ -32,7 +32,6 @@
             android:text="2. tick_marks_drawable=@drawable/selector_tick_marks_drawable" />
 
         <com.warkiz.tickseekbar.TickSeekBar
-            android:tag="aaaa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tsb_progress="45"
@@ -55,12 +54,16 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="4. tick_texts_color=@color/selector_tick_texts_3_color" />
+            android:text="4. tick_texts_color=@color/selector_tick_texts_3_color,\n r2l=true" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tsb_progress="76"
+            app:tsb_max="-10"
+            app:tsb_min="-20"
+            app:tsb_progress="-17"
+            app:tsb_progress_value_float="true"
+            app:tsb_r2l="true"
             app:tsb_show_tick_marks_type="divider"
             app:tsb_show_tick_texts="above"
             app:tsb_tick_texts_color="@color/selector_tick_texts_3_color"
@@ -86,9 +89,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tsb_progress="20"
-            app:tsb_thumb_size="18dp"
             app:tsb_show_tick_marks_type="divider"
             app:tsb_thumb_drawable="@drawable/selector_thumb_drawable"
+            app:tsb_thumb_size="18dp"
             app:tsb_ticks_count="6" />
 
         <include layout="@layout/source_code_link" />

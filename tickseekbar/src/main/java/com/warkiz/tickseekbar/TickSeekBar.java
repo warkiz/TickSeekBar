@@ -316,17 +316,13 @@ public class TickSeekBar extends View {
             return;
         }
         for (int i = 0; i < mTickMarksX.length; i++) {
-            int index = i;
-            if (mR2L) {
-                index = mTickMarksX.length - i - 1;
-            }
             if (mTickTextsPosition != TextPosition.NONE) {
-                mTickTextsArr[index] = getTickTextByPosition(index);
-                mTextPaint.getTextBounds(mTickTextsArr[index], 0, mTickTextsArr[index].length(), mRect);
-                mTickTextsWidth[index] = mRect.width();
+                mTickTextsArr[i] = getTickTextByPosition(i);
+                mTextPaint.getTextBounds(mTickTextsArr[i], 0, mTickTextsArr[i].length(), mRect);
+                mTickTextsWidth[i] = mRect.width();
                 mTextCenterX[i] = mPaddingLeft + mSeekBlockLength * i;
             }
-            mTickMarksX[index] = mPaddingLeft + mSeekBlockLength * index;
+            mTickMarksX[i] = mPaddingLeft + mSeekBlockLength * i;
         }
 
     }
@@ -510,12 +506,16 @@ public class TickSeekBar extends View {
             } else {
                 mTextPaint.setColor(getRightSideTickTextsColor());
             }
+            int index = i;
+            if (mR2L) {
+                index = mTickTextsArr.length - 1 - i;
+            }
             if (i == 0) {
-                canvas.drawText(mTickTextsArr[i], mTextCenterX[i] + mTickTextsWidth[i] / 2.0f, mTickTextY, mTextPaint);
+                canvas.drawText(mTickTextsArr[index], mTextCenterX[i] + mTickTextsWidth[index] / 2.0f, mTickTextY, mTextPaint);
             } else if (i == mTickTextsArr.length - 1) {
-                canvas.drawText(mTickTextsArr[i], mTextCenterX[i] - mTickTextsWidth[i] / 2.0f, mTickTextY, mTextPaint);
+                canvas.drawText(mTickTextsArr[index], mTextCenterX[i] - mTickTextsWidth[index] / 2.0f, mTickTextY, mTextPaint);
             } else {
-                canvas.drawText(mTickTextsArr[i], mTextCenterX[i], mTickTextY, mTextPaint);
+                canvas.drawText(mTickTextsArr[index], mTextCenterX[i], mTickTextY, mTextPaint);
             }
         }
     }
@@ -1110,7 +1110,7 @@ public class TickSeekBar extends View {
 
     private int getClosestIndex() {
         int closestIndex = 0;
-        float amplitude = mMax;
+        float amplitude = Math.abs(mMax - mMin);
         for (int i = 0; i < mProgressArr.length; i++) {
             float amplitudeTemp = Math.abs(mProgressArr[i] - mProgress);
             if (amplitudeTemp <= amplitude) {
@@ -1400,7 +1400,7 @@ public class TickSeekBar extends View {
     }
 
     /**
-     * Sets the current progress to the specified value.also,
+     * Sets the current progress to the specified value.Also,
      * if the seek bar's tick'count is larger than 2,the progress will adjust to the closest tick's progress auto.
      *
      * @param progress a new progress value , if the new progress is less than min ,
@@ -1503,9 +1503,9 @@ public class TickSeekBar extends View {
     }
 
     /**
-     * Set a new thumb tick marks.
+     * Set a new tick marks drawable.
      *
-     * @param drawable the drawable for thumb,selector drawable is ok.
+     * @param drawable the drawable for marks,selector drawable is ok.
      *                 selector format:
      */
     //< ?xml version="1.0" encoding="utf-8"?>
