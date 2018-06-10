@@ -179,6 +179,12 @@ seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
 });
 ```
 
+## 混淆配置
+
+``` groovy
+-dontwarn com.warkiz.tickseekbar.**
+```
+
 ## 属性
 
 [ attr.xml ](https://github.com/warkiz/TickSeekBar/blob/master/tickseekbar/src/main/res/values/attr.xml)

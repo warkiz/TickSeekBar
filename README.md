@@ -179,6 +179,12 @@ seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
 });
 ```
 
+## Proguard
+
+``` groovy
+-dontwarn com.warkiz.tickseekbar.**
+```
+
 ## Attributes
 
 [ attr.xml ](https://github.com/warkiz/TickSeekBar/blob/master/tickseekbar/src/main/res/values/attr.xml)
