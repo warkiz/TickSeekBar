@@ -7,17 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
-import com.warkiz.tickseekbar.TickSeekBar;
 import com.warkiz.tickseekbar.sample.fragment.ContinuousFragment;
 import com.warkiz.tickseekbar.sample.fragment.CustomFragment;
 import com.warkiz.tickseekbar.sample.fragment.DiscreteFragment;
 import com.warkiz.tickseekbar.sample.fragment.JavaBuildFragment;
-import com.warkiz.widget.IndicatorSeekBar;
-
-import java.util.Random;
 
 /**
  * created by zhuangguangquan on 2018/6/6

@@ -31,19 +31,19 @@ implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.3'
     android:id="@+id/listener"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:isb_ticks_count="5"
-    app:isb_thumb_color="@color/colorAccent"
-    app:isb_thumb_size="16dp"
-    app:isb_show_tick_marks_type="oval"
-    app:isb_tick_marks_color="@color/colorAccent"
-    app:isb_tick_marks_size="8dp"
-    app:isb_show_tick_texts="above"
-    app:isb_tick_texts_color="@color/color_pink"
-    app:isb_tick_texts_size="13sp"
-    app:isb_track_background_color="@color/color_gray"
-    app:isb_track_background_size="2dp"
-    app:isb_track_progress_color="@color/color_blue"
-    app:isb_track_progress_size="3dp" />
+    app:tsb_ticks_count="5"
+    app:tsb_thumb_color="@color/colorAccent"
+    app:tsb_thumb_size="16dp"
+    app:tsb_show_tick_marks_type="oval"
+    app:tsb_tick_marks_color="@color/colorAccent"
+    app:tsb_tick_marks_size="8dp"
+    app:tsb_show_tick_texts="above"
+    app:tsb_tick_texts_color="@color/color_pink"
+    app:tsb_tick_texts_size="13sp"
+    app:tsb_track_background_color="@color/color_gray"
+    app:tsb_track_background_size="2dp"
+    app:tsb_track_progress_color="@color/color_blue"
+    app:tsb_track_progress_size="3dp" />
 ```
 
 #### Java
