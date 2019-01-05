@@ -38,6 +38,7 @@ public class Builder {
     //thumb
     int thumbSize;
     int thumbColor = Color.parseColor("#FF4081");
+    boolean thumbAutoAdjust = true;
     ColorStateList thumbColorStateList = null;
     Drawable thumbDrawable = null;
     //tickTexts
@@ -241,6 +242,16 @@ public class Builder {
      */
     public Builder thumbColor(@ColorInt int thumbColor) {
         this.thumbColor = thumbColor;
+        return this;
+    }
+
+    /**
+     * adjust thumb to tick position auto after touch up
+     *
+     * @param autoAdjust true to adjust thumb to tick position auto after touch up
+     */
+    public Builder thumbAutoAdjust(boolean autoAdjust) {
+        this.thumbAutoAdjust = autoAdjust;
         return this;
     }
 

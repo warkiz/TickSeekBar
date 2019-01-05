@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
@@ -20,11 +19,12 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.MathUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
 /**
@@ -67,8 +67,8 @@ public class TickSeekBar extends View {
     private float mTickTextY;//the text's drawing Y anchor
     private int mTickTextsSize;
     private Typeface mTextsTypeface;//the tick texts and thumb texts' typeface
-    private int mSelectedTextsColor;//the color for the tick texts those thumb swept.
-    private int mUnselectTextsColor;//the color for the tick texts those thumb haven't reach.
+    private int mUnselectedTextsColor;//the color for the tick texts those thumb haven't reach.
+    private int mSelectedTextsColor;//the color for the tick texts those thumb haven't reach.
     private int mHoveredTextColor;//the color for the tick texts which below/above thumb.
     private int mDefaultTickTextsHeight;
     private CharSequence[] mTickTextsCustomArray;
@@ -78,7 +78,7 @@ public class TickSeekBar extends View {
     private int mUnSelectedTickMarksColor;//the color for the tickMarks those thumb haven't reach.
     private int mSelectedTickMarksColor;//the color for the tickMarks those thumb swept.
     private float mTickRadius;//the tick's radius
-    private Bitmap mUnselectTickMarksBitmap;//the drawable bitmap for tick
+    private Bitmap mUnselectedTickMarksBitmap;//the drawable bitmap for tick
     private Bitmap mSelectTickMarksBitmap;//the drawable bitmap for tick
     private Drawable mTickMarksDrawable;
     private int mShowTickMarksType;
@@ -111,6 +111,7 @@ public class TickSeekBar extends View {
     private boolean mClearPadding;
     private SeekParams mSeekParams;
     private int mScale = 1;
+    private boolean mAdjustAuto;
 
     public TickSeekBar(Context context) {
         this(context, null);
@@ -164,6 +165,7 @@ public class TickSeekBar extends View {
         mThumbSize = ta.getDimensionPixelSize(R.styleable.TickSeekBar_tsb_thumb_size, builder.thumbSize);
         mThumbDrawable = ta.getDrawable(R.styleable.TickSeekBar_tsb_thumb_drawable);
         initThumbColor(ta.getColorStateList(R.styleable.TickSeekBar_tsb_thumb_color), builder.thumbColor);
+        mAdjustAuto = ta.getBoolean(R.styleable.TickSeekBar_tsb_thumb_adjust_auto, builder.thumbAutoAdjust);
         //thumb text
         mThumbTextShowPos = ta.getInt(R.styleable.TickSeekBar_tsb_show_thumb_text, builder.thumbTextShow);
         mThumbTextColor = ta.getColor(R.styleable.TickSeekBar_tsb_thumb_text_color, builder.thumbTextColor);
@@ -210,10 +212,21 @@ public class TickSeekBar extends View {
         measureTickTextsBonds();
         lastProgress = mProgress;
 
+        collectTicksInfo();
+
+        mProgressTrack = new RectF();
+        mBackgroundTrack = new RectF();
+        initDefaultPadding();
+
+    }
+
+    private void collectTicksInfo() {
+        if (mTicksCount < 0 || mTicksCount > 50) {
+            throw new IllegalArgumentException("the Argument: TICK COUNT must be limited between (0-50), Now is " + mTicksCount);
+        }
         if (mTicksCount != 0) {
             mTickMarksX = new float[mTicksCount];
             if (mTickTextsPosition != TextPosition.NONE) {
-                mTickTextsArr = new String[mTicksCount];
                 mTextCenterX = new float[mTicksCount];
                 mTickTextsWidth = new float[mTicksCount];
             }
@@ -221,12 +234,8 @@ public class TickSeekBar extends View {
             for (int i = 0; i < mProgressArr.length; i++) {
                 mProgressArr[i] = mMin + i * (mMax - mMin) / ((mTicksCount - 1) > 0 ? (mTicksCount - 1) : 1);
             }
+
         }
-
-        mProgressTrack = new RectF();
-        mBackgroundTrack = new RectF();
-        initDefaultPadding();
-
     }
 
     private void initDefaultPadding() {
@@ -314,6 +323,9 @@ public class TickSeekBar extends View {
     private void initTextsArray() {
         if (mTickMarksX == null) {
             return;
+        }
+        if (mTickTextsPosition != TextPosition.NONE) {
+            mTickTextsArr = new String[mTicksCount];
         }
         for (int i = 0; i < mTickMarksX.length; i++) {
             if (mTickTextsPosition != TextPosition.NONE) {
@@ -462,17 +474,17 @@ public class TickSeekBar extends View {
                 mStockPaint.setColor(getRightSideTickColor());
             }
             if (mTickMarksDrawable != null) {
-                if (mSelectTickMarksBitmap == null || mUnselectTickMarksBitmap == null) {
+                if (mSelectTickMarksBitmap == null || mUnselectedTickMarksBitmap == null) {
                     initTickMarksBitmap();
                 }
-                if (mSelectTickMarksBitmap == null || mUnselectTickMarksBitmap == null) {
+                if (mSelectTickMarksBitmap == null || mUnselectedTickMarksBitmap == null) {
                     //please check your selector drawable's format and correct.
                     throw new IllegalArgumentException("the format of the selector TickMarks drawable is wrong!");
                 }
                 if (i <= thumbPosFloat) {
-                    canvas.drawBitmap(mSelectTickMarksBitmap, mTickMarksX[i] - mUnselectTickMarksBitmap.getWidth() / 2.0f, mProgressTrack.top - mUnselectTickMarksBitmap.getHeight() / 2.0f, mStockPaint);
+                    canvas.drawBitmap(mSelectTickMarksBitmap, mTickMarksX[i] - mUnselectedTickMarksBitmap.getWidth() / 2.0f, mProgressTrack.top - mUnselectedTickMarksBitmap.getHeight() / 2.0f, mStockPaint);
                 } else {
-                    canvas.drawBitmap(mUnselectTickMarksBitmap, mTickMarksX[i] - mUnselectTickMarksBitmap.getWidth() / 2.0f, mProgressTrack.top - mUnselectTickMarksBitmap.getHeight() / 2.0f, mStockPaint);
+                    canvas.drawBitmap(mUnselectedTickMarksBitmap, mTickMarksX[i] - mUnselectedTickMarksBitmap.getWidth() / 2.0f, mProgressTrack.top - mUnselectedTickMarksBitmap.getHeight() / 2.0f, mStockPaint);
                 }
                 continue;
             }
@@ -651,11 +663,11 @@ public class TickSeekBar extends View {
      * NOTICE: make sure the format of color selector you set is right.
      * int[][] states = colorStateList.getStates();
      * (1) if the states.length == 1,the way you set the thumb color like :
-     * app:tsb_thumb_color="#XXXXXX"  or
-     * app:tsb_thumb_color="@color/color_name" ;
+     * app:isb_thumb_color="#XXXXXX"  or
+     * app:isb_thumb_color="@color/color_name" ;
      * <p>
      * (2) if the states.length == 3,the way you set the thumb color like :
-     * app:tsb_thumb_color="@color/selector_color_file_name". the file(located at res/color/)'s format should like:
+     * app:isb_thumb_color="@color/selector_color_file_name". the file(located at res/color/)'s format should like:
      * <p>
      * <?xml version="1.0" encoding="utf-8"?>
      * <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -663,7 +675,7 @@ public class TickSeekBar extends View {
      * <item android:color="#555555"/>                                <!--for thumb which is at normal status-->
      * </selector>
      * <p>
-     * (3) if the states.length == other, the color's format you set was wrong.
+     * (3) if the states.length == other, the color's format you set is not support.
      */
     private void initThumbColor(ColorStateList colorStateList, int defaultColor) {
         //if you didn't set the thumb color, set a default color.
@@ -672,8 +684,26 @@ public class TickSeekBar extends View {
             mPressedThumbColor = mThumbColor;
             return;
         }
-        int[][] states = colorStateList.getStates();
-        int[] colors = colorStateList.getColors();
+        int[][] states = null;
+        int[] colors = null;
+        Class<? extends ColorStateList> aClass = colorStateList.getClass();
+        try {
+            Field[] f = aClass.getDeclaredFields();
+            for (Field field : f) {
+                field.setAccessible(true);
+                if ("mStateSpecs".equals(field.getName())) {
+                    states = (int[][]) field.get(colorStateList);
+                }
+                if ("mColors".equals(field.getName())) {
+                    colors = (int[]) field.get(colorStateList);
+                }
+            }
+            if (states == null || colors == null) {
+                return;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Something wrong happened when parseing thumb selector color.");
+        }
         if (states.length == 1) {
             mThumbColor = colors[0];
             mPressedThumbColor = mThumbColor;
@@ -690,14 +720,12 @@ public class TickSeekBar extends View {
                         break;
                     default:
                         //the color selector file was set by a wrong format , please see above to correct.
-                        throw new IllegalArgumentException("the selector color file you set for the argument: " +
-                                "tsb_thumb_color is in wrong format.");
+                        throw new IllegalArgumentException("the selector color file you set for the argument: isb_thumb_color is in wrong format.");
                 }
             }
         } else {
             //the color selector file was set by a wrong format , please see above to correct.
-            throw new IllegalArgumentException("the selector color file you set for the argument:" +
-                    " tsb_thumb_color is in wrong format.");
+            throw new IllegalArgumentException("the selector color file you set for the argument: isb_thumb_color is in wrong format.");
         }
 
     }
@@ -709,11 +737,11 @@ public class TickSeekBar extends View {
      * NOTICE: make sure the format of color selector you set is right.
      * int[][] states = colorStateList.getStates();
      * (1) if the states.length == 1,the way you set the tick marks' color like :
-     * app:tsb_tick_marks_color="#XXXXXX"  or
-     * app:tsb_tick_marks_color="@color/color_name" ;
+     * app:isb_tick_marks_color="#XXXXXX"  or
+     * app:isb_tick_marks_color="@color/color_name" ;
      * <p>
      * (2) if the states.length == 2,the way you set the tick marks' color like :
-     * app:tsb_tick_marks_color="@color/selector_color_file_name". the file(located at res/color/)'s format should like:
+     * app:isb_tick_marks_color="@color/selector_color_file_name". the file(located at res/color/)'s format should like:
      * <p>
      * <?xml version="1.0" encoding="utf-8"?>
      * <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -721,7 +749,7 @@ public class TickSeekBar extends View {
      * <item android:color="#555555"/>                                 <!--for marks those are at right side of thumb-->
      * </selector>
      * <p>
-     * (3) if the states.length == other, the way you set is wrong.
+     * (3) if the states.length == other, the way you set is not support.
      */
     private void initTickMarksColor(ColorStateList colorStateList, int defaultColor) {
         //if you didn't set the tick's text color, set a default selector color file.
@@ -730,8 +758,26 @@ public class TickSeekBar extends View {
             mUnSelectedTickMarksColor = mSelectedTickMarksColor;
             return;
         }
-        int[][] states = colorStateList.getStates();
-        int[] colors = colorStateList.getColors();
+        int[][] states = null;
+        int[] colors = null;
+        Class<? extends ColorStateList> aClass = colorStateList.getClass();
+        try {
+            Field[] f = aClass.getDeclaredFields();
+            for (Field field : f) {
+                field.setAccessible(true);
+                if ("mStateSpecs".equals(field.getName())) {
+                    states = (int[][]) field.get(colorStateList);
+                }
+                if ("mColors".equals(field.getName())) {
+                    colors = (int[]) field.get(colorStateList);
+                }
+            }
+            if (states == null || colors == null) {
+                return;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Something wrong happened when parsing thumb selector color." + e.getMessage());
+        }
         if (states.length == 1) {
             mSelectedTickMarksColor = colors[0];
             mUnSelectedTickMarksColor = mSelectedTickMarksColor;
@@ -748,12 +794,12 @@ public class TickSeekBar extends View {
                         break;
                     default:
                         //the color selector file was set by a wrong format , please see above to correct.
-                        throw new IllegalArgumentException("the selector color file you set for the argument: tsb_tick_marks_color is in wrong format.");
+                        throw new IllegalArgumentException("the selector color file you set for the argument: isb_tick_marks_color is in wrong format.");
                 }
             }
         } else {
             //the color selector file was set by a wrong format , please see above to correct.
-            throw new IllegalArgumentException("the selector color file you set for the argument: tsb_tick_marks_color is in wrong format.");
+            throw new IllegalArgumentException("the selector color file you set for the argument: isb_tick_marks_color is in wrong format.");
         }
     }
 
@@ -764,11 +810,11 @@ public class TickSeekBar extends View {
      * NOTICE: make sure the format of color selector you set is right.
      * int[][] states = colorStateList.getStates();
      * (1) if the states.length == 1,the way you set the tick texts' color like :
-     * app:tsb_tick_text_color="#XXXXXX"  or
-     * app:tsb_tick_text_color="@color/color_name" ;
+     * app:isb_tick_text_color="#XXXXXX"  or
+     * app:isb_tick_text_color="@color/color_name" ;
      * <p>
      * (2) if the states.length == 3,the way you set the tick texts' color like :
-     * app:tsb_tick_text_color="@color/selector_color_file_name". the file(located at res/color/)'s format should like:
+     * app:isb_tick_text_color="@color/selector_color_file_name". the file(located at res/color/)'s format should like:
      * <p>
      * <?xml version="1.0" encoding="utf-8"?>
      * <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -777,27 +823,45 @@ public class TickSeekBar extends View {
      * <item android:color="#555555"/>                                 <!--for texts those are at right side of thumb-->
      * </selector>
      * <p>
-     * (3) if the states.length == other, the way you set is wrong.
+     * (3) if the states.length == other, the way you set is not support.
      */
     private void initTickTextsColor(ColorStateList colorStateList, int defaultColor) {
         //if you didn't set the tick's texts color, will be set a selector color file default.
         if (colorStateList == null) {
-            mUnselectTextsColor = defaultColor;
-            mSelectedTextsColor = mUnselectTextsColor;
-            mHoveredTextColor = mUnselectTextsColor;
+            mUnselectedTextsColor = defaultColor;
+            mSelectedTextsColor = mUnselectedTextsColor;
+            mHoveredTextColor = mUnselectedTextsColor;
             return;
         }
-        int[][] states = colorStateList.getStates();
-        int[] colors = colorStateList.getColors();
+        int[][] states = null;
+        int[] colors = null;
+        Class<? extends ColorStateList> aClass = colorStateList.getClass();
+        try {
+            Field[] f = aClass.getDeclaredFields();
+            for (Field field : f) {
+                field.setAccessible(true);
+                if ("mStateSpecs".equals(field.getName())) {
+                    states = (int[][]) field.get(colorStateList);
+                }
+                if ("mColors".equals(field.getName())) {
+                    colors = (int[]) field.get(colorStateList);
+                }
+            }
+            if (states == null || colors == null) {
+                return;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Something wrong happened when parseing thumb selector color.");
+        }
         if (states.length == 1) {
-            mUnselectTextsColor = colors[0];
-            mSelectedTextsColor = mUnselectTextsColor;
-            mHoveredTextColor = mUnselectTextsColor;
+            mUnselectedTextsColor = colors[0];
+            mSelectedTextsColor = mUnselectedTextsColor;
+            mHoveredTextColor = mUnselectedTextsColor;
         } else if (states.length == 3) {
             for (int i = 0; i < states.length; i++) {
                 int[] attr = states[i];
                 if (attr.length == 0) {//didn't have state,so just get color.
-                    mUnselectTextsColor = colors[i];
+                    mUnselectedTextsColor = colors[i];
                     continue;
                 }
                 switch (attr[0]) {
@@ -809,14 +873,12 @@ public class TickSeekBar extends View {
                         break;
                     default:
                         //the color selector file was set by a wrong format , please see above to correct.
-                        throw new IllegalArgumentException("the selector color file you set for " +
-                                "the argument: tsb_tick_texts_color is in wrong format.");
+                        throw new IllegalArgumentException("the selector color file you set for the argument: isb_tick_texts_color is in wrong format.");
                 }
             }
         } else {
             //the color selector file was set by a wrong format , please see above to correct.
-            throw new IllegalArgumentException("the selector color file you set for the " +
-                    "argument: tsb_tick_texts_color is in wrong format.");
+            throw new IllegalArgumentException("the selector color file you set for the argument: isb_tick_texts_color is in wrong format.");
         }
     }
 
@@ -858,10 +920,10 @@ public class TickSeekBar extends View {
      * NOTICE: make sure the format of drawable selector file you set is right.
      * int stateCount = listDrawable.getStateCount();
      * (1) if the drawable instanceof BitmapDrawable,the way you set like :
-     * app:tsb_thumb_drawable="@drawable/ic_launcher"
+     * app:isb_thumb_drawable="@drawable/ic_launcher"
      * <p>
      * (2) if the drawable instanceof StateListDrawable,the way you set like :
-     * app:tsb_thumb_drawable="@drawable/selector_thumb_drawable". the file(located at res/drawable/)'s format should like:
+     * app:isb_thumb_drawable="@drawable/selector_thumb_drawable". the file(located at res/drawable/)'s format should like:
      * <p>
      * <?xml version="1.0" encoding="utf-8"?>
      * <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -870,33 +932,43 @@ public class TickSeekBar extends View {
      * </selector>
      */
     private void initThumbBitmap() {
-        if (mThumbDrawable instanceof BitmapDrawable) {
-            mThumbBitmap = getDrawBitmap(mThumbDrawable, true);
-            mPressedThumbBitmap = mThumbBitmap;
-        } else if (mThumbDrawable instanceof StateListDrawable) {
-            StateListDrawable listDrawable = (StateListDrawable) mThumbDrawable;
-            int stateCount = listDrawable.getStateCount();
-            if (stateCount == 2) {
-                for (int i = 0; i < stateCount; i++) {
-                    int[] stateSet = listDrawable.getStateSet(i);
-                    if (stateSet.length > 0) {
-                        if (stateSet[0] == android.R.attr.state_pressed) {
-                            mPressedThumbBitmap = getDrawBitmap(listDrawable.getStateDrawable(i), true);
+        if (mThumbDrawable == null) {
+            return;
+        }
+        if (mThumbDrawable instanceof StateListDrawable) {
+            try {
+                StateListDrawable listDrawable = (StateListDrawable) mThumbDrawable;
+                Class<? extends StateListDrawable> aClass = listDrawable.getClass();
+                int stateCount = (int) aClass.getMethod("getStateCount").invoke(listDrawable);
+                if (stateCount == 2) {
+                    Method getStateSet = aClass.getMethod("getStateSet", int.class);
+                    Method getStateDrawable = aClass.getMethod("getStateDrawable", int.class);
+                    for (int i = 0; i < stateCount; i++) {
+                        int[] stateSet = (int[]) getStateSet.invoke(listDrawable, i);
+                        if (stateSet.length > 0) {
+                            if (stateSet[0] == android.R.attr.state_pressed) {
+                                Drawable stateDrawable = (Drawable) getStateDrawable.invoke(listDrawable, i);
+                                mPressedThumbBitmap = getDrawBitmap(stateDrawable, true);
+                            } else {
+                                //please check your selector drawable's format, please see above to correct.
+                                throw new IllegalArgumentException("the state of the selector thumb drawable is wrong!");
+                            }
                         } else {
-                            //please check your selector drawable's format, please see above to correct.
-                            throw new IllegalArgumentException("the state of the selector thumb drawable is wrong!");
+                            Drawable stateDrawable = (Drawable) getStateDrawable.invoke(listDrawable, i);
+                            mThumbBitmap = getDrawBitmap(stateDrawable, true);
                         }
-                    } else {
-                        mThumbBitmap = getDrawBitmap(listDrawable.getStateDrawable(i), true);
                     }
+                } else {
+                    //please check your selector drawable's format, please see above to correct.
+                    throw new IllegalArgumentException("the format of the selector thumb drawable is wrong!");
                 }
-            } else {
-                //please check your selector drawable's format, please see above to correct.
-                throw new IllegalArgumentException("the format of the selector thumb drawable is wrong!");
+            } catch (Exception e) {
+                mThumbBitmap = getDrawBitmap(mThumbDrawable, true);
+                mPressedThumbBitmap = mThumbBitmap;
             }
         } else {
-            //please check your selector drawable's format, please see above to correct.
-            throw new IllegalArgumentException("Nonsupport this drawable's type for custom thumb drawable!");
+            mThumbBitmap = getDrawBitmap(mThumbDrawable, true);
+            mPressedThumbBitmap = mThumbBitmap;
         }
     }
 
@@ -907,10 +979,10 @@ public class TickSeekBar extends View {
      * NOTICE: make sure the format of drawable selector file you set is right.
      * int stateCount = listDrawable.getStateCount();
      * (1) if the drawable instanceof BitmapDrawable,the way you set like :
-     * app:tsb_tick_marks_drawable="@drawable/ic_launcher"
+     * app:isb_tick_marks_drawable="@drawable/ic_launcher"
      * <p>
      * (2) if the drawable instanceof StateListDrawable,the way you set like :
-     * app:tsb_tick_marks_drawable="@drawable/selector_thumb_drawable". the file(located at res/drawable/)'s format should like:
+     * app:isb_tick_marks_drawable="@drawable/selector_thumb_drawable". the file(located at res/drawable/)'s format should like:
      * <p>
      * <?xml version="1.0" encoding="utf-8"?>
      * <selector xmlns:android="http://schemas.android.com/apk/res/android">
@@ -919,35 +991,45 @@ public class TickSeekBar extends View {
      * </selector>
      */
     private void initTickMarksBitmap() {
-        if (mTickMarksDrawable instanceof BitmapDrawable) {
-            mUnselectTickMarksBitmap = getDrawBitmap(mTickMarksDrawable, false);
-            mSelectTickMarksBitmap = mUnselectTickMarksBitmap;
-        } else if (mTickMarksDrawable instanceof StateListDrawable) {
+        if (mTickMarksDrawable instanceof StateListDrawable) {
             StateListDrawable listDrawable = (StateListDrawable) mTickMarksDrawable;
-            int stateCount = listDrawable.getStateCount();
-            if (stateCount == 2) {
-                for (int i = 0; i < stateCount; i++) {
-                    int[] stateSet = listDrawable.getStateSet(i);
-                    if (stateSet.length > 0) {
-                        if (stateSet[0] == android.R.attr.state_selected) {
-                            mSelectTickMarksBitmap = getDrawBitmap(listDrawable.getStateDrawable(i), false);
+            try {
+                Class<? extends StateListDrawable> aClass = listDrawable.getClass();
+                Method getStateCount = aClass.getMethod("getStateCount");
+                int stateCount = (int) getStateCount.invoke(listDrawable);
+                if (stateCount == 2) {
+                    Method getStateSet = aClass.getMethod("getStateSet", int.class);
+                    Method getStateDrawable = aClass.getMethod("getStateDrawable", int.class);
+                    for (int i = 0; i < stateCount; i++) {
+                        int[] stateSet = (int[]) getStateSet.invoke(listDrawable, i);
+                        if (stateSet.length > 0) {
+                            if (stateSet[0] == android.R.attr.state_selected) {
+                                Drawable stateDrawable = (Drawable) getStateDrawable.invoke(listDrawable, i);
+                                mSelectTickMarksBitmap = getDrawBitmap(stateDrawable, false);
+                            } else {
+                                //please check your selector drawable's format, please see above to correct.
+                                throw new IllegalArgumentException("the state of the selector TickMarks drawable is wrong!");
+                            }
                         } else {
-                            //please check your selector drawable's format, please see above to correct.
-                            throw new IllegalArgumentException("the state of the selector TickMarks drawable is wrong!");
+                            Drawable stateDrawable = (Drawable) getStateDrawable.invoke(listDrawable, i);
+                            mUnselectedTickMarksBitmap = getDrawBitmap(stateDrawable, false);
                         }
-                    } else {
-                        mUnselectTickMarksBitmap = getDrawBitmap(listDrawable.getStateDrawable(i), false);
                     }
+                } else {
+                    //please check your selector drawable's format, please see above to correct.
+                    throw new IllegalArgumentException("the format of the selector TickMarks drawable is wrong!");
                 }
-            } else {
-                //please check your selector drawable's format, please see above to correct.
-                throw new IllegalArgumentException("the format of the selector TickMarks drawable is wrong!");
+            } catch (Exception e) {
+                mUnselectedTickMarksBitmap = getDrawBitmap(mTickMarksDrawable, false);
+                mSelectTickMarksBitmap = mUnselectedTickMarksBitmap;
             }
         } else {
-            //please check your selector drawable's format, please see above to correct.
-            throw new IllegalArgumentException("Nonsupport this drawable's type for custom TickMarks drawable!");
+            mUnselectedTickMarksBitmap = getDrawBitmap(mTickMarksDrawable, false);
+            mSelectTickMarksBitmap = mUnselectedTickMarksBitmap;
         }
+
     }
+
 
     private void measureTickTextsBonds() {
         if (needDrawText()) {
@@ -1029,16 +1111,16 @@ public class TickSeekBar extends View {
 
     private int getLeftSideTickTextsColor() {
         if (mR2L) {
-            return mUnselectTextsColor;
+            return mUnselectedTextsColor;
         }
         return mSelectedTextsColor;
     }
 
     private int getRightSideTickTextsColor() {
         if (mR2L) {
-            return mSelectedTextsColor;
+            return mUnselectedTextsColor;
         }
-        return mUnselectTextsColor;
+        return mUnselectedTextsColor;
     }
 
     @Override
@@ -1085,8 +1167,11 @@ public class TickSeekBar extends View {
         invalidate();
     }
 
-    public boolean autoAdjustThumb() {
-        if (mTicksCount < 3 || !mSeekSmoothly) {//it is not necessary to adjust while count less than 3 .
+    private boolean autoAdjustThumb() {
+        if (mTicksCount < 3 || !mSeekSmoothly) {//it is not necessary to adjust while count less than 2.
+            return false;
+        }
+        if (!mAdjustAuto) {
             return false;
         }
         final int closestIndex = getClosestIndex();
@@ -1096,12 +1181,15 @@ public class TickSeekBar extends View {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                lastProgress = mProgress;
                 if (touchUpProgress - mProgressArr[closestIndex] > 0) {
                     mProgress = touchUpProgress - (Float) animation.getAnimatedValue();
                 } else {
                     mProgress = touchUpProgress + (Float) animation.getAnimatedValue();
                 }
                 refreshThumbCenterXByProgress(mProgress);
+                //the auto adjust was happened after user touched up, so from user is false.
+                setSeekListener(false);
                 invalidate();
             }
         });
@@ -1153,7 +1241,7 @@ public class TickSeekBar extends View {
         //for discrete series seek bar
         if (mTicksCount > 2) {
             int rawThumbPos = getThumbPosOnTick();
-            if (mTickTextsPosition != TextPosition.NONE) {
+            if (mTickTextsPosition != TextPosition.NONE && mTickTextsArr != null) {
                 mSeekParams.tickText = mTickTextsArr[rawThumbPos];
             }
             if (mR2L) {
@@ -1268,18 +1356,15 @@ public class TickSeekBar extends View {
         return inWidthRange && inHeightRange;
     }
 
+
     /**
      * transfer the progress value to string type
      */
     private String getProgressString(float progress) {
-        String progressString;
         if (mIsFloatProgress) {
-            progressString = String.valueOf(BigDecimal.valueOf(progress).
-                    setScale(mScale, BigDecimal.ROUND_HALF_UP).floatValue());
-        } else {
-            progressString = String.valueOf(Math.round(progress));
+            return FormatUtils.fastFormat(progress, mScale);
         }
-        return progressString;
+        return String.valueOf(Math.round(progress));
     }
 
     private boolean isTouchThumb(float mX) {
@@ -1409,7 +1494,7 @@ public class TickSeekBar extends View {
      */
     public synchronized void setProgress(float progress) {
         lastProgress = mProgress;
-        mProgress = MathUtils.constrain(progress, mMin, mMax);
+        mProgress = progress < mMin ? mMin : (progress > mMax ? mMax : progress);
         //adjust to the closest tick's progress
         if (mTicksCount > 2) {
             mProgress = mProgressArr[getClosestIndex()];
@@ -1554,8 +1639,8 @@ public class TickSeekBar extends View {
      * @param tickTextsColor ColorInt
      */
     public void tickTextsColor(@ColorInt int tickTextsColor) {
-        mUnselectTextsColor = tickTextsColor;
-        mSelectedTextsColor = tickTextsColor;
+        mUnselectedTextsColor = tickTextsColor;
+        mUnselectedTextsColor = tickTextsColor;
         mHoveredTextColor = tickTextsColor;
         invalidate();
     }
@@ -1672,6 +1757,33 @@ public class TickSeekBar extends View {
     public void setOnSeekChangeListener(@NonNull OnSeekChangeListener listener) {
         this.mSeekChangeListener = listener;
     }
+
+    /**
+     * Sets the tick count
+     *
+     * @param tickCount
+     */
+    public synchronized void setTickCount(int tickCount) {
+        if (mTicksCount < 0 || mTicksCount > 50) {
+            throw new IllegalArgumentException("the Argument: TICK COUNT must be limited between (0-50), Now is " + mTicksCount);
+        }
+        mTicksCount = tickCount;
+        collectTicksInfo();
+        initTextsArray();
+        initSeekBarInfo();
+        refreshSeekBarLocation();
+        invalidate();
+    }
+
+    /**
+     * Sets the thumb move to the closed tick after touched up automatically, default true
+     *
+     * @param adjustAuto true if auto move after touched up.
+     */
+    public void setThumbAdjustAuto(boolean adjustAuto) {
+        mAdjustAuto = adjustAuto;
+    }
+
 
     /****************** API END ******************/
 

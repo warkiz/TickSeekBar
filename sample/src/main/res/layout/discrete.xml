@@ -149,6 +149,7 @@
             app:tsb_tick_texts_array="@array/last_next_length_5"
             app:tsb_ticks_count="5" />
 
+
         <TextView
             style="@style/subtitle_text_style"
             android:text="9. show_tick_texts=above, tick_texts_array=@array/last_next_length_5 \n seek_smoothly=true" />
@@ -164,7 +165,20 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="10. show_tick_texts=below, r2l=true" />
+            android:text="10. thumbAutoAdjust = false" />
+
+        <com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_seek_smoothly="true"
+            app:tsb_show_tick_marks_type="oval"
+            app:tsb_show_tick_texts="above"
+            app:tsb_thumb_adjust_auto="false"
+            app:tsb_tick_texts_array="@array/last_next_length_5"
+            app:tsb_ticks_count="5" />
+        <TextView
+            style="@style/subtitle_text_style"
+            android:text="11. show_tick_texts=below, r2l=true" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
@@ -177,7 +191,7 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="11. show_tick_texts=above, tick_texts_array=@array/irregular_length_6" />
+            android:text="12. show_tick_texts=above, tick_texts_array=@array/irregular_length_6" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
@@ -190,7 +204,7 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="12. show_tick_texts=below, tick_texts_array=@array/tick_below_text_length_5" />
+            android:text="13. show_tick_texts=below, tick_texts_array=@array/tick_below_text_length_5" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"
@@ -202,7 +216,7 @@
 
         <TextView
             style="@style/subtitle_text_style"
-            android:text="13. show_tick_texts=above, tick_texts_array=@array/tick_below_text_length_5" />
+            android:text="14. show_tick_texts=above, tick_texts_array=@array/tick_below_text_length_5" />
 
         <com.warkiz.tickseekbar.TickSeekBar
             android:layout_width="match_parent"

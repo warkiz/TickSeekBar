@@ -23,6 +23,7 @@
         <attr name="tsb_thumb_color" format="color|reference" /><!--set thumb's color, default #FF4081-->
         <attr name="tsb_thumb_size" format="dimension|reference" /><!--set thumb's size, default 14dp, thumb size will be limited in 30dp-->
         <attr name="tsb_thumb_drawable" format="reference" /><!--set custom thumb's drawable you want,thumb size will be limited in 30dp, if drawable less than 30dp ,will show in raw size -->
+        <attr name="tsb_thumb_adjust_auto" format="boolean" /><!--set the thumb move to the closed tick after touched up, default true-->
         //thumb text
         <attr name="tsb_thumb_text_color" format="color|reference" /><!--set thumb's color, default #FF4081-->
         <attr name="tsb_show_thumb_text"><!--select the tick shape type, default rectangle/1-->
