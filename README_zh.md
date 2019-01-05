@@ -17,6 +17,9 @@
 ## 演示
 [下载](https://github.com/warkiz/TickSeekBar/blob/master/apk/demo.apk)
 
+扫描二维码下载:
+<img src="https://github.com/warkiz/TickSeekBar/blob/master/gif/demo_qrcode.png?raw=true" width = "100" height = "100"/>
+
 ## 初始化
 
 ```gradle
