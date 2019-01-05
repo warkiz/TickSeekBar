@@ -19,7 +19,7 @@ This is a customizable SeekBar library on Android. Also, If you need Indicator t
 ## Setup
 
 ```gradle
-implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.3'
+implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
 ```
 
 ## Usage
@@ -191,7 +191,15 @@ seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
 
 ## Support & Contact me
 
-Star to support me , many thanks!
+感谢：
+自从在文档里公布了二维码，我收到国内的朋友的一些打赏，虽然金额不大，但是一些支持和鼓励的话语还是让我感到开心，非常感谢。
+
+感谢所有之前支持我的朋友。如果下次你要给我打赏，可以顺带写上你的github地址，我会在这里用链接贴出来，算是相互鼓励。
+
+感谢你们的支持。
+
+
+<img src="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/alipay.png?raw=true" width = "400" height = "531"/><img src="https://github.com/warkiz/IndicatorSeekBar/blob/master/app/src/main/res/mipmap-xxhdpi/wechat_pay.png?raw=true" width = "387" height = "531"/>
 
 Feel free to contact me if you have any trouble on this project:
 1. Create an issue.
