@@ -1561,6 +1561,16 @@ public class TickSeekBar extends View {
     }
 
     /**
+     * set the seek bar's thumb's size.
+     *
+     * @param thumbSize Int
+     */
+    public void thumbSize(int thumbSize) {
+        this.mThumbSize = thumbSize;
+        invalidate();
+    }
+
+    /**
      * set the seek bar's thumb's color.
      *
      * @param thumbColor colorInt
