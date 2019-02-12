@@ -31,6 +31,8 @@
             <enum name="below" value="1" />
             <enum name="above" value="2" />
         </attr>
+        <!--<attr name="tsb_thumb_text_size" format="dimension|reference" />&lt;!&ndash;set thumb's text size, use #tsb_tick_texts_size&ndash;&gt;-->
+        <attr name="tsb_thumb_text_distance" format="dimension|reference" /><!--set thumb's distance to thumb, default 3dp-->
         //tickMarks
         <attr name="tsb_tick_marks_color" format="color|reference" /><!--set tick's color, default #FF4081-->
         <attr name="tsb_tick_marks_size" format="dimension|reference" /><!--set the tick width, default 10dp,custom drawable will be limited in 30dp, if less than 30dp ,will show in raw size-->

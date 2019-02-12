@@ -61,7 +61,10 @@
             app:tsb_show_thumb_text="above"
             app:tsb_thumb_color="@color/color_blue"
             app:tsb_thumb_text_color="@color/color_pink"
-            app:tsb_track_progress_color="@color/color_blue" />
+            app:tsb_track_progress_color="@color/color_blue"
+            app:tsb_tick_texts_size="8sp"
+            app:tsb_thumb_text_distance="5dp"
+            />
 
         <TextView
             style="@style/subtitle_text_style"

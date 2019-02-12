@@ -108,6 +108,8 @@ public class TickSeekBar extends View {
     private int mThumbTextShowPos;//the palace where the thumb text show .
     private float mThumbTextY;//the thumb text's drawing Y anchor
     private int mThumbTextColor;
+    private float mThumbTextDistance;//the thumb text's Y disntance from origin #mThumbTextY
+    private int mThumbTextSize;//as.#tsb_tick_texts_size got the same meaning..
     private boolean mClearPadding;
     private SeekParams mSeekParams;
     private int mScale = 1;
@@ -169,6 +171,7 @@ public class TickSeekBar extends View {
         //thumb text
         mThumbTextShowPos = ta.getInt(R.styleable.TickSeekBar_tsb_show_thumb_text, builder.thumbTextShow);
         mThumbTextColor = ta.getColor(R.styleable.TickSeekBar_tsb_thumb_text_color, builder.thumbTextColor);
+        mThumbTextDistance = ta.getDimension(R.styleable.TickSeekBar_tsb_thumb_text_distance, builder.thumbTextDistance);
         //tickMarks
         mTicksCount = ta.getInt(R.styleable.TickSeekBar_tsb_ticks_count, builder.tickCount);
         mShowTickMarksType = ta.getInt(R.styleable.TickSeekBar_tsb_show_tick_marks_type, builder.showTickMarksType);
@@ -1067,18 +1070,18 @@ public class TickSeekBar extends View {
             mDefaultTickTextsHeight = mRect.height();
             if (isAboveBelowText()) {//one of the text is below seek bar, the other is above.
                 if (mTickTextsPosition == TextPosition.BELOW) {
-                    mThumbTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
-                    mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    mThumbTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
+                    mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
                 } else {
-                    mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
-                    mThumbTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
+                    mThumbTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
                 }
                 return;
             }
             if (hasBelowText()) {//both text below seek bar
-                mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
             } else if (hasAboveText()) {//both text above seek bar
-                mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
             }
             mThumbTextY = mTickTextY;
         }
