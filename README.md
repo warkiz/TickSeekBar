@@ -25,6 +25,16 @@ This is a customizable SeekBar library on Android. Also, If you need Indicator t
 implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
 ```
 
+> 如果想要使用本分支的fork
+根目录`build.gradle`
+```gradle
+    maven { url 'https://dl.bintray.com/jdpxiaoming/Maven/' }
+```
+
+```gradle
+implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.4'
+```
+
 ## Usage
 #### xml
 
@@ -46,6 +56,21 @@ implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
     app:tsb_track_background_size="2dp"
     app:tsb_track_progress_color="@color/color_blue"
     app:tsb_track_progress_size="3dp" />
+```
+#### 控制thumb text的y距离和尺寸
+![pic](https://github.com/jdpxiaoming/TickSeekBar/blob/master/gif/tick_thumby.png?raw=true)
+```xml
+<com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="88"
+            app:tsb_show_thumb_text="above"
+            app:tsb_thumb_color="@color/color_blue"
+            app:tsb_thumb_text_color="@color/color_pink"
+            app:tsb_track_progress_color="@color/color_blue"
+            app:tsb_tick_texts_size="8sp"
+            app:tsb_thumb_text_distance="5dp"
+            />
 ```
 
 #### Java

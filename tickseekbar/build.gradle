@@ -3,23 +3,23 @@ apply plugin: 'com.android.library'
 def VERSION_NAME = "0.1.4"
 
 ext {
-    bintrayRepo = 'maven'
+    bintrayRepo = 'Maven'
     bintrayName = 'tickseekbar'
 
-    publishedGroupId = 'com.github.warkiz.tickseekbar'
+    publishedGroupId = 'com.github.jdpxiaoming.tickseekbar'
     libraryName = 'TickSeekbar'
     artifact = 'tickseekbar'
 
-    libraryDescription = 'A custom SeekBar on Android.'
+    libraryDescription = 'A custom SeekBar on Android.add the thumb text y disntance.'
 
-    siteUrl = 'https://github.com/warkiz/TickSeekBar'
-    gitUrl = 'https://github.com/warkiz/TickSeekBar.git'
+    siteUrl = 'https://github.com/jdpxiaoming/TickSeekBar'
+    gitUrl = 'https://github.com/jdpxiaoming/TickSeekBar.git'
 
     libraryVersion = VERSION_NAME
 
-    developerId = 'warkiz'
-    developerName = 'Guangquan Chuang'
-    developerEmail = 'warkiz4j@gmail.com'
+    developerId = 'jdpxiaoming'
+    developerName = 'poe.Cai'
+    developerEmail = '302940116@qq.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
