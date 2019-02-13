@@ -26,13 +26,9 @@ implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
 ```
 
 > 如果想要使用本分支的fork
-根目录`build.gradle`
-```gradle
-    maven { url 'https://dl.bintray.com/jdpxiaoming/Maven/' }
-```
 
 ```gradle
-implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.4'
+implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.5'
 ```
 
 ## Usage
