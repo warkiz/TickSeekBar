@@ -37,6 +37,7 @@ public class TickSeekBar extends View {
     private Paint mStockPaint;//the paint for seek bar drawing
     private TextPaint mTextPaint;//the paint for mTickTextsArr drawing
     private OnSeekChangeListener mSeekChangeListener;
+    private OnSeekCallBack mSeekCallBackDelegate;//info back deleage.ex: progress:1 *10 return 10 as the thumb text.
     private Rect mRect;
     private float mCustomDrawableMaxHeight;//the max height for custom drawable
     private float lastProgress;
@@ -1364,6 +1365,9 @@ public class TickSeekBar extends View {
      * transfer the progress value to string type
      */
     private String getProgressString(float progress) {
+        if(null != mSeekCallBackDelegate){
+            return mSeekCallBackDelegate.getThumbText(progress);
+        }
         if (mIsFloatProgress) {
             return FormatUtils.fastFormat(progress, mScale);
         }
@@ -1759,6 +1763,14 @@ public class TickSeekBar extends View {
      */
     public void setOnSeekChangeListener(@NonNull OnSeekChangeListener listener) {
         this.mSeekChangeListener = listener;
+    }
+
+    /**
+     * Set the listener to delegate thumb text to show .
+     * @param listener OnSeekChangeListener
+     */
+    public void setOnSeekCallback(@NonNull OnSeekCallBack listener) {
+        this.mSeekCallBackDelegate = listener;
     }
 
     /**
