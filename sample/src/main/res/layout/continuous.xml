@@ -55,6 +55,7 @@
              \n thumb_color=@color/color_blue \n thumb_text_color=@color/color_pink" />
 
         <com.warkiz.tickseekbar.TickSeekBar
+            android:id="@+id/delegate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tsb_progress="88"

@@ -207,6 +207,33 @@ seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
 });
 ```
 
+## delegate listener for thumb text .
+```java
+final List<String> rateArray = new ArrayList();
+        rateArray.add("5");
+        rateArray.add("15");
+        rateArray.add("55");
+        rateArray.add("115");
+        rateArray.add("225");
+        rateArray.add("255");
+
+        if(rateArray!=null && rateArray.size()>0){
+            delegateSeekBar.setOnSeekCallback(new OnSeekCallBack() {
+                @Override
+                public String getThumbText(float progress) {
+                    int index = Math.round(progress);
+                    if(index<rateArray.size()){
+                        return rateArray.get(index);
+                    }
+                    return rateArray.get(rateArray.size()-1);
+                }
+            });
+            //为了保持对齐 : index会滑到size最大值，而数组是从0开始的
+            delegateSeekBar.setMax(rateArray.size()-1);
+            delegateSeekBar.setProgress(0);
+        }
+```
+
 ## Proguard
 
 ``` groovy
