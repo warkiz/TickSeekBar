@@ -18,6 +18,7 @@ import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -115,6 +116,7 @@ public class TickSeekBar extends View {
     private SeekParams mSeekParams;
     private int mScale = 1;
     private boolean mAdjustAuto;
+    private String mThumbTextContent;//cache the thumb text content .
 
     public TickSeekBar(Context context) {
         this(context, null);
@@ -1365,13 +1367,25 @@ public class TickSeekBar extends View {
      * transfer the progress value to string type
      */
     private String getProgressString(float progress) {
+        mThumbTextContent = String.valueOf(Math.round(progress));
         if(null != mSeekCallBackDelegate){
-            return mSeekCallBackDelegate.getThumbText(progress);
+            mThumbTextContent = mSeekCallBackDelegate.getThumbText(progress);
         }
         if (mIsFloatProgress) {
-            return FormatUtils.fastFormat(progress, mScale);
+            mThumbTextContent = FormatUtils.fastFormat(progress, mScale);
         }
-        return String.valueOf(Math.round(progress));
+        if(TextUtils.isEmpty(mThumbTextContent)){
+            mThumbTextContent = "0";
+        }
+        return mThumbTextContent;
+    }
+
+    /**
+     *
+     * @return thumb text content .
+     */
+    public String getThumbText(){
+        return mThumbTextContent;
     }
 
     private boolean isTouchThumb(float mX) {

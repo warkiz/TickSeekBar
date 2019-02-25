@@ -28,7 +28,7 @@ implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
 > 如果想要使用本分支的fork
 
 ```gradle
-implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.5'
+implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.5.1'
 ```
 
 ## Usage
@@ -67,6 +67,44 @@ implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.5'
             app:tsb_tick_texts_size="8sp"
             app:tsb_thumb_text_distance="5dp"
             />
+```
+
+#### 自定义thumb text显示内容可用于实现任意step步长
+#### delegate listener for thumb text .
+```java
+final List<String> rateArray = new ArrayList();
+        rateArray.add("5");
+        rateArray.add("15");
+        rateArray.add("55");
+        rateArray.add("115");
+        rateArray.add("225");
+        rateArray.add("255");
+
+        if(rateArray!=null && rateArray.size()>0){
+            delegateSeekBar.setOnSeekCallback(new OnSeekCallBack() {
+                @Override
+                public String getThumbText(float progress) {
+                    int index = Math.round(progress);
+                    if(index<rateArray.size()){
+                        return rateArray.get(index);
+                    }
+                    return rateArray.get(rateArray.size()-1);
+                }
+            });
+            //为了保持对齐 : index会滑到size最大值，而数组是从0开始的
+            delegateSeekBar.setMax(rateArray.size()-1);
+            delegateSeekBar.setProgress(0);
+        }
+```
+#### 获取当前显示的thumb text. 
+```java
+   /**
+       *
+       * @return thumb text content .
+       */
+      public String getThumbText(){
+          return mThumbTextContent;
+      }      
 ```
 
 #### Java
@@ -176,58 +214,6 @@ TickTexts selector color：
     <!--for texts those are at right side of thumb-->
     <item android:color="@color/color_gray" />
 </selector>
-```
-
-## Listener
-```Java
-seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
-        @Override
-        public void onSeeking(SeekParams seekParams) {
-            Log.i(TAG, seekParams.seekBar);
-            Log.i(TAG, seekParams.progress);
-            Log.i(TAG, seekParams.progressFloat);
-            Log.i(TAG, seekParams.fromUser);
-            //when tick count > 0
-            Log.i(TAG, seekParams.thumbPosition);
-            Log.i(TAG, seekParams.tickText);
-        }
-
-        @Override
-        public void onStartTrackingTouch(TickSeekBar seekBar) {
-        }
-
-        @Override
-        public void onStopTrackingTouch(TickSeekBar seekBar) {
-        }
-
-});
-```
-
-## delegate listener for thumb text .
-```java
-final List<String> rateArray = new ArrayList();
-        rateArray.add("5");
-        rateArray.add("15");
-        rateArray.add("55");
-        rateArray.add("115");
-        rateArray.add("225");
-        rateArray.add("255");
-
-        if(rateArray!=null && rateArray.size()>0){
-            delegateSeekBar.setOnSeekCallback(new OnSeekCallBack() {
-                @Override
-                public String getThumbText(float progress) {
-                    int index = Math.round(progress);
-                    if(index<rateArray.size()){
-                        return rateArray.get(index);
-                    }
-                    return rateArray.get(rateArray.size()-1);
-                }
-            });
-            //为了保持对齐 : index会滑到size最大值，而数组是从0开始的
-            delegateSeekBar.setMax(rateArray.size()-1);
-            delegateSeekBar.setProgress(0);
-        }
 ```
 
 ## Proguard
