@@ -1749,6 +1749,18 @@ public class TickSeekBar extends View {
         invalidate();
     }
 
+
+    /**
+     * Set the color of the progress track
+     *
+     * @param color Color integer
+     */
+    public void setProgressTrackColor(@ColorInt int color) {
+        this.mProgressTrackColor = color;
+        requestLayout();
+        invalidate();
+    }
+
     /**
      * Set the listener to listen the seeking params changing.
      *
