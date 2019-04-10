@@ -1496,7 +1496,7 @@ public class TickSeekBar extends View {
         lastProgress = mProgress;
         mProgress = progress < mMin ? mMin : (progress > mMax ? mMax : progress);
         //adjust to the closest tick's progress
-        if (mTicksCount > 2) {
+        if (mTicksCount > 2 && !mSeekSmoothly) {
             mProgress = mProgressArr[getClosestIndex()];
         }
         setSeekListener(false);
