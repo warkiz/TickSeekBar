@@ -1607,6 +1607,21 @@ public class TickSeekBar extends View {
     }
 
     /**
+     * Allow\deny user to seek.
+     * @param isSeekable boolean
+     */
+    public void setUserSeekable(boolean isSeekable) {
+        this.mUserSeekable = isSeekable;
+    }
+
+    /**
+     * @return boolean, which describe if user can seek
+     */
+    public boolean getUserSeekable() {
+        return mUserSeekable;
+    }
+
+    /**
      * set the seek bar's tick's color.
      *
      * @param tickMarksColor colorInt
