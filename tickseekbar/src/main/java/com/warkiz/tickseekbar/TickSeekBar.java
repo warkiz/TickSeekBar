@@ -533,6 +533,9 @@ public class TickSeekBar extends View {
     }
 
     private void drawThumb(Canvas canvas) {
+        if(!isEnabled()){
+            return;
+        }
         float thumbCenterX = getThumbCenterX();
         if (mThumbDrawable != null) {//check user has set thumb drawable or not.ThumbDrawable first, thumb color for later.
             if (mThumbBitmap == null || mPressedThumbBitmap == null) {
