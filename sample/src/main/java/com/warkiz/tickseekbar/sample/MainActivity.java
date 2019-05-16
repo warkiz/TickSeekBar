@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
+        mFragmentList.add(new CustomFragment());
         mFragmentList.add(new ContinuousFragment());
         mFragmentList.add(new DiscreteFragment());
-        mFragmentList.add(new CustomFragment());
         mFragmentList.add(new JavaBuildFragment());
         mFragmentList.add(new DonationFragment());
     }

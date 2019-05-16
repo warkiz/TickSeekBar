@@ -69,9 +69,13 @@ implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.5.1'
             />
 ```
 
+#### 增加左右两侧自增按钮.
+![pic](https://github.com/jdpxiaoming/TickSeekBar/blob/master/gif/auto.png?raw=true)
+
+
 #### 自定义thumb text显示内容可用于实现任意step步长
 #### delegate listener for thumb text .
-```java
+```Java
 final List<String> rateArray = new ArrayList();
         rateArray.add("5");
         rateArray.add("15");
@@ -97,7 +101,7 @@ final List<String> rateArray = new ArrayList();
         }
 ```
 #### 获取当前显示的thumb text. 
-```java
+```txt
    /**
        *
        * @return thumb text content .
@@ -106,6 +110,32 @@ final List<String> rateArray = new ArrayList();
           return mThumbTextContent;
       }      
 ```
+
+### 在`seekbar`外部增加手动点击的`十` or `一`
+```xml
+<com.warkiz.tickseekbar.AutoTickSeekBar
+            android:id="@+id/auto_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:action_color="#CB8DFF"
+            >
+            <com.warkiz.tickseekbar.TickSeekBar
+                android:id="@+id/tick_seek_bar_auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tsb_thumb_color="#8874C5"
+                app:tsb_thumb_text_color="#8874C5"
+                app:tsb_track_progress_color="#8874C5"
+                app:tsb_show_thumb_text="above"
+                app:tsb_tick_texts_size="12sp"
+                app:tsb_thumb_adjust_auto="true"
+                app:tsb_thumb_text_distance="5dp"
+                app:tsb_track_background_size="8dp"
+                app:tsb_track_progress_size="8dp"
+                app:tsb_track_rounded_corners="true"
+                />
+        </com.warkiz.tickseekbar.AutoTickSeekBar>
+``` 
 
 #### Java
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <Button
+        android:id="@+id/left_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:text="一"
+        android:textSize="14dp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="#8874C5"
+        android:layout_marginLeft="10pt"
+        android:layout_marginTop="14dp"
+        />
+
+    <Button
+        android:id="@+id/right_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:text="十"
+        android:textSize="14dp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="#8874C5"
+        android:layout_marginRight="10pt"
+        android:layout_marginTop="14dp"
+        />
+    <RelativeLayout
+        android:id="@+id/auto_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/left_btn"
+        android:layout_toLeftOf="@id/right_btn"
+        />
+</merge>
