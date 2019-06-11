@@ -35,6 +35,7 @@ public class Builder {
     //thumbText
     int thumbTextColor = Color.parseColor("#FF4081");
     int thumbTextShow = TextPosition.NONE;
+    int thumbTextDistance = 0;
     //thumb
     int thumbSize;
     int thumbColor = Color.parseColor("#FF4081");
@@ -66,6 +67,7 @@ public class Builder {
         this.tickMarksSize = SizeUtils.dp2px(context, 10);
         this.tickTextsSize = SizeUtils.sp2px(context, 13);
         this.thumbSize = SizeUtils.dp2px(context, 14);
+        this.thumbTextDistance = SizeUtils.dp2px(context, 3);
     }
 
     /**

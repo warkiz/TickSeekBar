@@ -25,6 +25,12 @@ This is a customizable SeekBar library on Android. Also, If you need Indicator t
 implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
 ```
 
+> 如果想要使用本分支的fork
+
+```gradle
+implementation 'com.github.jdpxiaoming.tickseekbar:tickseekbar:0.1.5.1'
+```
+
 ## Usage
 #### xml
 
@@ -47,6 +53,89 @@ implementation 'com.github.warkiz.tickseekbar:tickseekbar:0.1.4'
     app:tsb_track_progress_color="@color/color_blue"
     app:tsb_track_progress_size="3dp" />
 ```
+#### 控制thumb text的y距离和尺寸
+![pic](https://github.com/jdpxiaoming/TickSeekBar/blob/master/gif/tick_thumby.png?raw=true)
+```xml
+<com.warkiz.tickseekbar.TickSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tsb_progress="88"
+            app:tsb_show_thumb_text="above"
+            app:tsb_thumb_color="@color/color_blue"
+            app:tsb_thumb_text_color="@color/color_pink"
+            app:tsb_track_progress_color="@color/color_blue"
+            app:tsb_tick_texts_size="8sp"
+            app:tsb_thumb_text_distance="5dp"
+            />
+```
+
+#### 增加左右两侧自增按钮.
+![pic](https://github.com/jdpxiaoming/TickSeekBar/blob/master/gif/auto.png?raw=true)
+
+
+#### 自定义thumb text显示内容可用于实现任意step步长
+#### delegate listener for thumb text .
+```Java
+final List<String> rateArray = new ArrayList();
+        rateArray.add("5");
+        rateArray.add("15");
+        rateArray.add("55");
+        rateArray.add("115");
+        rateArray.add("225");
+        rateArray.add("255");
+
+        if(rateArray!=null && rateArray.size()>0){
+            delegateSeekBar.setOnSeekCallback(new OnSeekCallBack() {
+                @Override
+                public String getThumbText(float progress) {
+                    int index = Math.round(progress);
+                    if(index<rateArray.size()){
+                        return rateArray.get(index);
+                    }
+                    return rateArray.get(rateArray.size()-1);
+                }
+            });
+            //为了保持对齐 : index会滑到size最大值，而数组是从0开始的
+            delegateSeekBar.setMax(rateArray.size()-1);
+            delegateSeekBar.setProgress(0);
+        }
+```
+#### 获取当前显示的thumb text. 
+```txt
+   /**
+       *
+       * @return thumb text content .
+       */
+      public String getThumbText(){
+          return mThumbTextContent;
+      }      
+```
+
+### 在`seekbar`外部增加手动点击的`十` or `一`
+```xml
+<com.warkiz.tickseekbar.AutoTickSeekBar
+            android:id="@+id/auto_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:action_color="#CB8DFF"
+            >
+            <com.warkiz.tickseekbar.TickSeekBar
+                android:id="@+id/tick_seek_bar_auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tsb_thumb_color="#8874C5"
+                app:tsb_thumb_text_color="#8874C5"
+                app:tsb_track_progress_color="#8874C5"
+                app:tsb_show_thumb_text="above"
+                app:tsb_tick_texts_size="12sp"
+                app:tsb_thumb_adjust_auto="true"
+                app:tsb_thumb_text_distance="5dp"
+                app:tsb_track_background_size="8dp"
+                app:tsb_track_progress_size="8dp"
+                app:tsb_track_rounded_corners="true"
+                />
+        </com.warkiz.tickseekbar.AutoTickSeekBar>
+``` 
 
 #### Java
 
@@ -155,31 +244,6 @@ TickTexts selector color：
     <!--for texts those are at right side of thumb-->
     <item android:color="@color/color_gray" />
 </selector>
-```
-
-## Listener
-```Java
-seekBar.setOnSeekChangeListener(new OnSeekChangeListener() {
-        @Override
-        public void onSeeking(SeekParams seekParams) {
-            Log.i(TAG, seekParams.seekBar);
-            Log.i(TAG, seekParams.progress);
-            Log.i(TAG, seekParams.progressFloat);
-            Log.i(TAG, seekParams.fromUser);
-            //when tick count > 0
-            Log.i(TAG, seekParams.thumbPosition);
-            Log.i(TAG, seekParams.tickText);
-        }
-
-        @Override
-        public void onStartTrackingTouch(TickSeekBar seekBar) {
-        }
-
-        @Override
-        public void onStopTrackingTouch(TickSeekBar seekBar) {
-        }
-
-});
 ```
 
 ## Proguard

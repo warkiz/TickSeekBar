@@ -18,6 +18,7 @@ import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +38,7 @@ public class TickSeekBar extends View {
     private Paint mStockPaint;//the paint for seek bar drawing
     private TextPaint mTextPaint;//the paint for mTickTextsArr drawing
     private OnSeekChangeListener mSeekChangeListener;
+    private OnSeekCallBack mSeekCallBackDelegate;//info back deleage.ex: progress:1 *10 return 10 as the thumb text.
     private Rect mRect;
     private float mCustomDrawableMaxHeight;//the max height for custom drawable
     private float lastProgress;
@@ -108,10 +110,13 @@ public class TickSeekBar extends View {
     private int mThumbTextShowPos;//the palace where the thumb text show .
     private float mThumbTextY;//the thumb text's drawing Y anchor
     private int mThumbTextColor;
+    private float mThumbTextDistance;//the thumb text's Y disntance from origin #mThumbTextY
+    private int mThumbTextSize;//as.#tsb_tick_texts_size got the same meaning..
     private boolean mClearPadding;
     private SeekParams mSeekParams;
     private int mScale = 1;
     private boolean mAdjustAuto;
+    private String mThumbTextContent;//cache the thumb text content .
 
     public TickSeekBar(Context context) {
         this(context, null);
@@ -169,6 +174,7 @@ public class TickSeekBar extends View {
         //thumb text
         mThumbTextShowPos = ta.getInt(R.styleable.TickSeekBar_tsb_show_thumb_text, builder.thumbTextShow);
         mThumbTextColor = ta.getColor(R.styleable.TickSeekBar_tsb_thumb_text_color, builder.thumbTextColor);
+        mThumbTextDistance = ta.getDimension(R.styleable.TickSeekBar_tsb_thumb_text_distance, builder.thumbTextDistance);
         //tickMarks
         mTicksCount = ta.getInt(R.styleable.TickSeekBar_tsb_ticks_count, builder.tickCount);
         mShowTickMarksType = ta.getInt(R.styleable.TickSeekBar_tsb_show_tick_marks_type, builder.showTickMarksType);
@@ -1067,18 +1073,18 @@ public class TickSeekBar extends View {
             mDefaultTickTextsHeight = mRect.height();
             if (isAboveBelowText()) {//one of the text is below seek bar, the other is above.
                 if (mTickTextsPosition == TextPosition.BELOW) {
-                    mThumbTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
-                    mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    mThumbTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
+                    mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
                 } else {
-                    mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
-                    mThumbTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
+                    mThumbTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
                 }
                 return;
             }
             if (hasBelowText()) {//both text below seek bar
-                mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
             } else if (hasAboveText()) {//both text above seek bar
-                mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + mThumbTextDistance;
             }
             mThumbTextY = mTickTextY;
         }
@@ -1361,10 +1367,25 @@ public class TickSeekBar extends View {
      * transfer the progress value to string type
      */
     private String getProgressString(float progress) {
-        if (mIsFloatProgress) {
-            return FormatUtils.fastFormat(progress, mScale);
+        mThumbTextContent = String.valueOf(Math.round(progress));
+        if(null != mSeekCallBackDelegate){
+            mThumbTextContent = mSeekCallBackDelegate.getThumbText(progress);
         }
-        return String.valueOf(Math.round(progress));
+        if (mIsFloatProgress) {
+            mThumbTextContent = FormatUtils.fastFormat(progress, mScale);
+        }
+        if(TextUtils.isEmpty(mThumbTextContent)){
+            mThumbTextContent = "0";
+        }
+        return mThumbTextContent;
+    }
+
+    /**
+     *
+     * @return thumb text content .
+     */
+    public String getThumbText(){
+        return mThumbTextContent;
     }
 
     private boolean isTouchThumb(float mX) {
@@ -1756,6 +1777,14 @@ public class TickSeekBar extends View {
      */
     public void setOnSeekChangeListener(@NonNull OnSeekChangeListener listener) {
         this.mSeekChangeListener = listener;
+    }
+
+    /**
+     * Set the listener to delegate thumb text to show .
+     * @param listener OnSeekChangeListener
+     */
+    public void setOnSeekCallback(@NonNull OnSeekCallBack listener) {
+        this.mSeekCallBackDelegate = listener;
     }
 
     /**
