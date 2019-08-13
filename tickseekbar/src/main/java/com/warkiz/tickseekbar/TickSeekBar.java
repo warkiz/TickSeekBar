@@ -313,7 +313,7 @@ public class TickSeekBar extends View {
         initTextsArray();
         //adjust thumb auto,so find out the closest mProgressArr in the mProgressArr array and replace it.
         //it is not necessary to adjust thumb while count is less than 3.
-        if (mTicksCount > 2) {
+        if (mTicksCount > 2 && !mSeekSmoothly) {
             mProgress = mProgressArr[getClosestIndex()];
             lastProgress = mProgress;
         }
@@ -533,6 +533,9 @@ public class TickSeekBar extends View {
     }
 
     private void drawThumb(Canvas canvas) {
+        if(!isEnabled()){
+            return;
+        }
         float thumbCenterX = getThumbCenterX();
         if (mThumbDrawable != null) {//check user has set thumb drawable or not.ThumbDrawable first, thumb color for later.
             if (mThumbBitmap == null || mPressedThumbBitmap == null) {
@@ -1496,7 +1499,7 @@ public class TickSeekBar extends View {
         lastProgress = mProgress;
         mProgress = progress < mMin ? mMin : (progress > mMax ? mMax : progress);
         //adjust to the closest tick's progress
-        if (mTicksCount > 2) {
+        if (mTicksCount > 2 && !mSeekSmoothly) {
             mProgress = mProgressArr[getClosestIndex()];
         }
         setSeekListener(false);
