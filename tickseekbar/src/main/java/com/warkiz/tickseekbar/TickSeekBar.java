@@ -282,7 +282,11 @@ public class TickSeekBar extends View {
         if (isAboveBelowText()) {
             setMeasuredDimension(resolveSize(SizeUtils.dp2px(mContext, 170), widthMeasureSpec), height + 2 * mTickTextsHeight);
         } else {
-            setMeasuredDimension(resolveSize(SizeUtils.dp2px(mContext, 170), widthMeasureSpec), height + mTickTextsHeight);
+            if (mShowTickMarksType == TickMarkType.DIVIDER_BELOW) {
+                setMeasuredDimension(resolveSize(SizeUtils.dp2px(mContext, 170), widthMeasureSpec), height + mTickMarksSize + mTickTextsHeight);
+            } else {
+                setMeasuredDimension(resolveSize(SizeUtils.dp2px(mContext, 170), widthMeasureSpec), height + mTickTextsHeight);
+            }
         }
         initSeekBarInfo();
         refreshSeekBarLocation();
@@ -465,7 +469,7 @@ public class TickSeekBar extends View {
                     continue;
                 }
             }
-            if (i == getThumbPosOnTick() && mTicksCount > 2 && !mSeekSmoothly) {
+            if (i == getThumbPosOnTick() && mTicksCount > 2 && !mSeekSmoothly && mShowTickMarksType != TickMarkType.DIVIDER_BELOW) {
                 continue;
             }
             if (i <= thumbPosFloat) {
@@ -501,6 +505,22 @@ public class TickSeekBar extends View {
                 canvas.drawRect(mTickMarksX[i] - rectWidth, mProgressTrack.top - dividerTickHeight / 2.0f, mTickMarksX[i] + rectWidth, mProgressTrack.top + dividerTickHeight / 2.0f, mStockPaint);
             } else if (mShowTickMarksType == TickMarkType.SQUARE) {
                 canvas.drawRect(mTickMarksX[i] - mTickMarksSize / 2.0f, mProgressTrack.top - mTickMarksSize / 2.0f, mTickMarksX[i] + mTickMarksSize / 2.0f, mProgressTrack.top + mTickMarksSize / 2.0f, mStockPaint);
+            } else if (mShowTickMarksType == TickMarkType.DIVIDER_BELOW) {
+                int rectWidth = SizeUtils.dp2px(mContext, 1);
+                int spaceBtwBarToDivider = SizeUtils.dp2px(mContext, 5);
+                float leftPos;
+                float rightPos;
+                if (i == 0) {
+                    leftPos = mTickMarksX[i];
+                    rightPos = mTickMarksX[i] + rectWidth;
+                } else if (i == mTickMarksX.length - 1) {
+                    leftPos = mTickMarksX[i] - rectWidth;
+                    rightPos = mTickMarksX[i];
+                } else {
+                    leftPos = mTickMarksX[i] - rectWidth / 2f;
+                    rightPos = mTickMarksX[i] + rectWidth/ 2f;
+                }
+                canvas.drawRect(leftPos, mProgressTrack.bottom + spaceBtwBarToDivider, rightPos, mProgressTrack.bottom + mTickMarksSize + spaceBtwBarToDivider, mStockPaint);
             }
         }
     }
@@ -1068,7 +1088,11 @@ public class TickSeekBar extends View {
             if (isAboveBelowText()) {//one of the text is below seek bar, the other is above.
                 if (mTickTextsPosition == TextPosition.BELOW) {
                     mThumbTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
-                    mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    if (mShowTickMarksType == TickMarkType.DIVIDER_BELOW) {
+                        mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + mTickMarksSize + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    } else {
+                        mTickTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                    }
                 } else {
                     mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
                     mThumbTextY = mTickTextsHeight + mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
@@ -1076,7 +1100,12 @@ public class TickSeekBar extends View {
                 return;
             }
             if (hasBelowText()) {//both text below seek bar
-                mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                if (mShowTickMarksType == TickMarkType.DIVIDER_BELOW) {
+                    mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + mTickMarksSize + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                } else {
+                    mTickTextY = mPaddingTop + mCustomDrawableMaxHeight + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
+                }
+
             } else if (hasAboveText()) {//both text above seek bar
                 mTickTextY = mPaddingTop + Math.round(mDefaultTickTextsHeight - mTextPaint.descent()) + SizeUtils.dp2px(mContext, 3);
             }
