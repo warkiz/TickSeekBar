@@ -183,6 +183,32 @@ public class JavaBuildFragment extends Fragment {
                 .build();
         content.addView(discrete_ticks_texts1);
 
+        TextView textView8 = getTextView();
+        textView8.setText("discrete_ticks_texts_with_divider_bellow");
+        content.addView(textView8);
+        //DISCRETE_TICKS_TEXTS
+        TickSeekBar discrete_ticks_texts_with_divider_bellow = TickSeekBar
+                .with(getContext())
+                .max(200)
+                .min(10.2f)
+                .progressValueFloat(true)
+                .progress(33)
+                .tickCount(7)
+                .showTickMarksType(TickMarkType.DIVIDER_BELOW)
+                .tickMarksColor(getResources().getColor(R.color.color_blue))
+                .tickMarksSize(10)//dp
+                .tickTextsSize(13)//sp
+                .showTickTextsPosition(TextPosition.BELOW)
+                .tickTextsColorStateList(getResources().getColorStateList(R.color.selector_tick_texts_3_color))
+                .thumbColor(Color.parseColor("#ff0000"))
+                .thumbSize(14)
+                .trackProgressColor(getResources().getColor(R.color.colorAccent))
+                .trackProgressSize(4)
+                .trackBackgroundColor(getResources().getColor(R.color.color_gray))
+                .trackBackgroundSize(2)
+                .build();
+        content.addView(discrete_ticks_texts_with_divider_bellow);
+
         TextView textView7 = getTextView();
         textView7.setText("discrete_ticks_texts_ends");
         content.addView(textView7);

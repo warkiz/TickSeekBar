@@ -42,7 +42,8 @@
             <enum name="oval" value="1" />
             <enum name="square" value="2" />
             <enum name="divider" value="3" /> <!--show tickMarks shape as vertical line , line'size is 1 dp.-->
-            <enum name="custom" value="4" />
+            <enum name="divider_below" value="4" />
+            <enum name="custom" value="5" />
         </attr>
         //tickTexts
         <attr name="tsb_show_tick_texts"><!--select the tick shape type, default rectangle/1-->

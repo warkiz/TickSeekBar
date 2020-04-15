@@ -21,4 +21,11 @@ public interface TickMarkType {
      * show tickMarks shape as vertical line , line'size is 2 dp.
      */
     int DIVIDER = 3;
+
+    /**
+     * show tickMarks shape as vertical line below barr , line'size is 2 dp.
+     */
+    int DIVIDER_BELOW = 4;
+
+
 }
